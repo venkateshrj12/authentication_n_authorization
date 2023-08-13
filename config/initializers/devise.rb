@@ -315,7 +315,7 @@ Devise.setup do |config|
   config.jwt do |jwt|
     # jwt.secret = ENV['DEVISE_JWT_SECRET_KEY'] since we dont have env file, we are using below line
     jwt.secret = Rails.application.credentials.fetch(:secret_key_base)
-    jwt.dipatch_requests = [
+    jwt.dispatch_requests = [
       ['POST', %r{^/users/sign_in$}]
     ]
     jwt.revocation_requests = [
