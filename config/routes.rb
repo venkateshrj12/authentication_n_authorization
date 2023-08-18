@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   }
 
   resources :current_user, only: [:index]
+  resources :companies
 end
