@@ -11,4 +11,24 @@ class User < ApplicationRecord
   end
 
   has_many :companies
+
+  ROLES = %w{super_admin admin manager editor collaborator}
+
+  # manual role verification
+  # def super_admin?
+  #   role == super_admin?
+  # end
+  # def admin?
+  #   role == admin?
+  # end
+  # def manager?
+  #   role == manager?
+  # end
+
+  # automated role verification using meta programming
+  ROLES.each do |role_name|
+    define_method "#{role_name}?" do
+      role == role_name
+    end
+  end
 end
