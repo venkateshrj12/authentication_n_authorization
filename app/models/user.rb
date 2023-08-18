@@ -12,7 +12,7 @@ class User < ApplicationRecord
 
   has_many :companies
 
-  ROLES = %w{super_admin admin manager editor collaborator}
+  ROLES = %w{super_admin admin manager editor collaborator user}
 
   # manual role verification
   # def super_admin?

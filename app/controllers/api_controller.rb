@@ -21,4 +21,8 @@ class ApiController < ApplicationController
   def render_bad_request_error(error_message, message)
     render json: { error: error_message, message: message }, status: 400
   end
+
+  rescue_from CanCan::AccessDenied do |e|
+    render json: e, status: :unauthorized
+  end
 end

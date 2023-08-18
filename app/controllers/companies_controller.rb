@@ -1,12 +1,14 @@
 class CompaniesController < ApiController
   before_action :authenticate_user!
+  load_and_authorize_resource
   before_action :set_pagination
   before_action :set_company, only: %i[ show update destroy ]
 
 
   # GET /companies
   def index
-    @companies = current_user.companies.page(@page).per(@per_page)
+    @companies = Company.accessible_by(current_ability)
+                  .page(@page).per(@per_page)
 
     render json: @companies
   end
