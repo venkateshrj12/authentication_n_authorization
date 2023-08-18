@@ -2,7 +2,6 @@
 
 class Users::SessionsController < Devise::SessionsController
   respond_to? :json
-  before_action :authenticate_user!
 
   private
   def respond_with(resource, options={})
@@ -12,7 +11,7 @@ class Users::SessionsController < Devise::SessionsController
   def respond_to_on_destroy
     begin
       jwt_payload = JWT.decode(request.headers["Authorization"].split(" ")[1], Rails.application.credentials.fetch(:secret_key_base)).first
-      # current_user = User.find(jwt_payload['sub'])
+      current_user = User.find(jwt_payload['sub'])
 
       render json: {message: "#{current_user.email} Signed out succesfully"}, status: 200
     rescue JWT::DecodeError => e
