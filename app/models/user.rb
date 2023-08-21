@@ -31,4 +31,10 @@ class User < ApplicationRecord
       role == role_name
     end
   end
+
+  before_create :set_user_role
+
+  def set_user_role
+    self.role = 'user'
+  end
 end

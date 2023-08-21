@@ -4,21 +4,24 @@ class Users::SessionsController < Devise::SessionsController
   respond_to? :json
 
   private
+  # /users/sign_in
   def respond_with(resource, options={})
-    render json: {message: "User signed in successfuldely", data: current_user}, status: 200
+    render json: {message: "User signed in succesfully", data: current_user}, status: 200
   end
 
+  # /users/sign_out
   def respond_to_on_destroy
-    begin
-      jwt_payload = JWT.decode(request.headers["Authorization"].split(" ")[1], Rails.application.credentials.fetch(:secret_key_base)).first
-      current_user = User.find(jwt_payload['sub'])
+    # set_current_user
+    # begin
+      # jwt_payload = JWT.decode(request.headers["Authorization"].split(" ")[1], Rails.application.credentials.fetch(:secret_key_base)).first
+      # current_user = User.find(jwt_payload['sub'])
 
-      render json: {message: "#{current_user.email} Signed out succesfully"}, status: 200
-    rescue JWT::DecodeError => e
-      render json: { error: "Token can not be blank!", message: "Please provide valid bearer token for authentication"}, status: 401
-    rescue JWT::ExpiredSignature => e
-      render json: { message: "Token has been expired, please sign in again" }, status: 401
-    end
+      render json: {message: "#{@user} signed out succesfully"}, status: 200
+    # rescue JWT::DecodeError => e
+    #   render json: { error: "Token can not be blank!", message: "Please provide valid bearer token for authentication"}, status: 401
+    # rescue JWT::ExpiredSignature => e
+    #   render json: { message: "Token has been expired, please sign in again" }, status: 401
+    # end
   end
   # before_action :configure_sign_in_params, only: [:create]
 
